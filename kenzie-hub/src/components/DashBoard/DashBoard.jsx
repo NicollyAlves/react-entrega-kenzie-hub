@@ -1,41 +1,35 @@
 import { api } from "../../services/Api";
 import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { SectionDashboard } from "./styles";
 import logo from "../../assets/Logo.svg"
 
 export const DashBoard = ({ user, setUser }) => {
 
-        const token = localStorage.getItem("@TOKEN")
-
+    const token = localStorage.getItem("@TOKEN")
+    
+    useEffect(() => {
+        api.get("/profile", {
+            headers: {
+                    'Authorization': `Token ${token}`
+                }
+            })
+            .then((res) => {
+                setUser(res.data)
+            })
+            .catch(err => err)
+        }, [])
         
-        useEffect(() => {
-            api.get("/profile", {
-                headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                })
-                .then((res) => {
-                    setUser(res.data)
-                    console.log(res.data);
-                    console.log(res);
-                })
-                .catch(err => {
-                    console.error("ops! ocorreu um erro" + err);
-                })
-            }, [])
-            
-            const navigate = useNavigate()
-            
-            if(!token) {
-                window.location.assign("/")
-            }
-            const clean = () => {
-                localStorage.clear()
-                navigate("/") 
-            }    
-
-
+        const navigate = useNavigate()
+        
+        if(!token) {
+            window.location.assign("/")
+        }
+        
+        const clean = () => {
+            localStorage.clear()
+            navigate("/") 
+        }    
             return (
                 <SectionDashboard>
                     <nav>

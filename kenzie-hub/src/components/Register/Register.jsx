@@ -55,7 +55,7 @@ export const Register = () => {
             <nav>
                 <img src={logo} alt="Imagem da Logo da Kenzie Hub" />
                 <Link to={"/"}>
-                    <button >Voltar</button>    
+                    <h4>Voltar</h4>    
                 </Link>
             </nav>
 

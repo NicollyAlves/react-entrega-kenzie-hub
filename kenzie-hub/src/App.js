@@ -1,8 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
-import './App.css';
 import { Login } from './components/Login/Login';
 import { Register } from './components/Register/Register';
-import axios from 'axios';
 import { DashBoard } from './components/DashBoard/DashBoard';
 import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
@@ -14,13 +12,13 @@ function App() {
 
   return (
     <>
-        <ToastContainer  />
-
-        <Routes>
-          <Route path='/' element={<Login setUser={setUser} user={user} />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/dashboard' element={<DashBoard user={user} setUser={setUser} />} />
-        </Routes>
+      <ToastContainer  />
+      
+      <Routes>
+        <Route path='/' element={<Login setUser={setUser} user={user} />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/dashboard' element={<DashBoard user={user} setUser={setUser} />} />
+      </Routes>
     </>
   );
 }

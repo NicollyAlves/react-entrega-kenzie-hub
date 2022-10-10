@@ -3,14 +3,11 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { api } from "../../services/Api"
-import { Button, ButtonRegister, SectionLogin } from "./styles"
+import { Button, SectionLogin } from "./styles"
 import { toast } from "react-toastify"
 import logo from "../../assets/Logo.svg"
 
-
-
-
-export const Login = ({user, setUser}) => {
+export const Login = ({ setUser }) => {
 
     const formSchema = yup.object().shape({
         password: yup.string().required("Senha é obrigatória"),
@@ -26,7 +23,6 @@ export const Login = ({user, setUser}) => {
     const onSubmitFunction = async (user) => {
         const response = await api.post("/sessions", {...user})
         .then(res => {
-            console.log(res);
             localStorage.clear()
             setUser(res.data.user)
             localStorage.setItem("@TOKEN", res.data.token)
@@ -34,7 +30,6 @@ export const Login = ({user, setUser}) => {
             navigate("/dashboard")
         })
         .catch(err => {
-            console.log(err);
             toast.error("Ops! Algo deu errado", {
                 autoClose: 2000,
                 style: {backgroundColor:"#343B41",
@@ -44,7 +39,6 @@ export const Login = ({user, setUser}) => {
                         }
             })
         })
-        console.log(user);
         return response
     }
     
@@ -71,7 +65,7 @@ export const Login = ({user, setUser}) => {
                 <p>Ainda não possui uma conta?</p>
     
                 <Link to={"/register"} >
-                    <ButtonRegister type="submit" >Cadastre-se</ButtonRegister>
+                    <h4>Cadastre-se</h4>
                 </Link>
             </form>
         </SectionLogin>

@@ -7,7 +7,6 @@ import { DashBoard } from "../components/DashBoard/DashBoard";
 
 export const Authenticator = () => {
 
-
     const token = window.localStorage.getItem("@TOKEN")
 
     if(!token) {

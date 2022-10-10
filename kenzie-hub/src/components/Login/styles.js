@@ -65,6 +65,24 @@ export const SectionLogin = styled.section`
             color: var(--Grey-1);
             margin-bottom: 15px;
         }
+
+        h4 {
+            height: 35px;
+            background-color: var(--Grey-2);
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            max-width: 250px;
+            min-width: 250px;
+            width: 80%;
+            text-decoration: none;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
 `
 
@@ -76,18 +94,5 @@ export const Button = styled.button`
     border-radius: 4px;
     font-weight: 600;
     margin-bottom: 20px;
-`
-
-export const ButtonRegister = styled.button`
-    height: 35px;
-    background-color: var(--Grey-2);
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    max-width: 250px;
-    min-width: 250px;
-    width: 80%;
 `
 

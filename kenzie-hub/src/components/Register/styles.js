@@ -17,15 +17,21 @@ export const SectionRegister = styled.section`
         min-width: 250px;
         margin-top: 30px;
 
-        button {
+        h4 {
+            display: flex;
             height: 35px;
             background-color: var(--Grey-2);
             color: #ffffff;
             border: none;
             border-radius: 4px;
             font-weight: 600;
-            padding: 7px;
+            padding-left: 5px;
+            padding-right: 5px;
             width: max-content;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--Headline);
+            font-size: 14px;
         }
     }
 
