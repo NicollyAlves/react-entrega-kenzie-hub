@@ -1,14 +1,16 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { api } from "../../services/Api"
 import { Button, SectionLogin } from "./styles"
-import { toast } from "react-toastify"
 import logo from "../../assets/Logo.svg"
+import { useContext } from "react"
+import { HomeContext } from "../../contexts/todos"
 
-export const Login = ({ setUser }) => {
+export const Login = () => {
 
+    const { onSubmitLogin } = useContext(HomeContext)
+    
     const formSchema = yup.object().shape({
         password: yup.string().required("Senha é obrigatória"),
         email: yup.string().required("Email é obrigatório").email("Email inválido"),
@@ -17,35 +19,11 @@ export const Login = ({ setUser }) => {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(formSchema)
     })
-    
-    const navigate = useNavigate()
-    
-    const onSubmitFunction = async (user) => {
-        const response = await api.post("/sessions", {...user})
-        .then(res => {
-            localStorage.clear()
-            setUser(res.data.user)
-            localStorage.setItem("@TOKEN", res.data.token)
-            localStorage.setItem("@USERID", res.data.user.id)
-            navigate("/dashboard")
-        })
-        .catch(err => {
-            toast.error("Ops! Algo deu errado", {
-                autoClose: 2000,
-                style: {backgroundColor:"#343B41",
-                        color:"white", 
-                        maxWidth:"200px",
-                        borderRadius:"5px", 
-                        }
-            })
-        })
-        return response
-    }
-    
+        
     return (
         <SectionLogin>
             <img src={logo} alt="Imagem da Logo da Kenzie Hub"></img>
-            <form onSubmit={handleSubmit(onSubmitFunction)}>
+            <form onSubmit={handleSubmit(onSubmitLogin)}>
                 <h2>Login</h2>
     
                 <div>
@@ -65,7 +43,7 @@ export const Login = ({ setUser }) => {
                 <p>Ainda não possui uma conta?</p>
     
                 <Link to={"/register"} >
-                    <h4>Cadastre-se</h4>
+                    Cadastre-se
                 </Link>
             </form>
         </SectionLogin>

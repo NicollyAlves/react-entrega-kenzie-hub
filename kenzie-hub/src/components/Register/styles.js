@@ -12,12 +12,11 @@ export const SectionRegister = styled.section`
         justify-content: space-between;
         flex-direction: row;
         padding: 20px;
-        width: 80%;
         max-width: 250px;
-        min-width: 250px;
+        width: 80%;
         margin-top: 30px;
 
-        h4 {
+        a {
             display: flex;
             height: 35px;
             background-color: var(--Grey-2);
@@ -31,6 +30,7 @@ export const SectionRegister = styled.section`
             align-items: center;
             justify-content: center;
             font-family: var(--Headline);
+            text-decoration: none;
             font-size: 14px;
         }
     }
@@ -39,7 +39,6 @@ export const SectionRegister = styled.section`
         display: flex;
         flex-direction: column;
         max-width: 250px;
-        min-width: 250px;
         width: 80%;
         margin: 0 auto;
         padding: 20px;

@@ -1,55 +1,73 @@
-import { api } from "../../services/Api";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { SectionDashboard } from "./styles";
+import { useContext } from "react";
+import { SectionDashboard, Modal } from "./styles";
 import logo from "../../assets/Logo.svg"
+import { HomeContext } from "../../contexts/todos";
+import * as yup from "yup"
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import lixeira from "../../assets/delete_FILL0_wght400_GRAD0_opsz48 1.svg"
+import { ButtonModal } from "./styles";
 
-export const DashBoard = ({ user, setUser }) => {
+export const DashBoard = () => {
 
-    const token = localStorage.getItem("@TOKEN")
+    const { user, clean, createNewTech, deleteTech, abrirModal, setAbrirModal } = useContext(HomeContext)
+
+    const formSchema = yup.object().shape({
+        title: yup.string().required("O título da tecnologia é obrigatório")
+    })
+
+    const { register, handleSubmit, formState: { errors }} = useForm({
+        resolver: yupResolver(formSchema)
+    })
+
+    console.log(errors);
     
-    useEffect(() => {
-        api.get("/profile", {
-            headers: {
-                    'Authorization': `Token ${token}`
-                }
-            })
-            .then((res) => {
-                setUser(res.data)
-            })
-            .catch(err => err)
-        }, [])
-        
-        const navigate = useNavigate()
-        
-        if(!token) {
-            window.location.assign("/")
-        }
-        
-        const clean = () => {
-            localStorage.clear()
-            navigate("/") 
-        }    
-            return (
-                <SectionDashboard>
-                    <nav>
-                        <img src={logo} alt="Imagem da Logo da Kenzie Hub" />
-                            <button onClick={() => clean()} >Sair</button>
-                    </nav> 
+    return (
+        <SectionDashboard>
+            <nav>
+                <img src={logo} alt="Imagem da Logo da Kenzie Hub" />
+                    <button onClick={() => clean()} >Sair</button>
+            </nav> 
+            <div>
+                <h2>Olá, {user.name}</h2>
+                <h3>{user.course_module}</h3>
+            </div>
+            <main>
+                <div>
+                    <h2>Tecnologias</h2>
+                    <button onClick={() => setAbrirModal(true)}>+</button>
+                </div>
+                <ul>
+                    {user.techs?.map((tech) => (
+                            <li key={tech.id} >
+                                <h2>{tech.title}</h2>
+                                <div>
+                                    <h3>{tech.status}</h3>
+                                    <img onClick={() => deleteTech(tech.id)}  src={lixeira} alt="Imagem de uma lixeira para apagar uma tecnologia" />
+                                </div>
+                            </li>
+                    ))}
+                </ul>
+            </main>
 
+            { abrirModal && <Modal>
+                <form onSubmit={handleSubmit(createNewTech)} >
                     <div>
-                        <h2>Olá, {user.name}</h2>
-                        <h3>{user.course_module}</h3>
+                        <h2>Cadastrar Tecnologia</h2>
+                        <button onClick={() => setAbrirModal(false)}>x</button>
                     </div>
+                    <label>Nome</label>
+                    <input type="text" {...register("title")} />
+                    <label>Selecionar status</label>
+                    <select {...register("status")} >
+                        <option value="Iniciante">Iniciante</option>
+                        <option value="Intermediário">Intermediário</option>
+                        <option value="Avançado">Avançado</option>
+                    </select>
+                    <ButtonModal>Cadastrar Tecnologia</ButtonModal>
+                </form>
+            </Modal>}
 
-                    <section>
-                        <h2>Que pena! Estamos em desenvolvimento :(</h2>
-                        <h3>Nossa aplicação está em desenvolvimento, em breve teremos novidades</h3>
-                    </section>
-                </SectionDashboard>
-            )
-        }
-        
-        
-        
-        
+        </SectionDashboard>
+    )
+}

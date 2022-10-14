@@ -17,7 +17,6 @@ export const SectionLogin = styled.section`
         display: flex;
         flex-direction: column;
         max-width: 250px;
-        min-width: 250px;
         width: 80%;
         margin: 0 auto;
         padding: 20px;
@@ -66,7 +65,7 @@ export const SectionLogin = styled.section`
             margin-bottom: 15px;
         }
 
-        h4 {
+        a {
             height: 35px;
             background-color: var(--Grey-2);
             color: #ffffff;
@@ -74,9 +73,7 @@ export const SectionLogin = styled.section`
             border-radius: 4px;
             font-weight: 600;
             margin-bottom: 20px;
-            max-width: 250px;
-            min-width: 250px;
-            width: 80%;
+            width: 100%;
             text-decoration: none;
             margin: auto;
             display: flex;

@@ -1,32 +1,16 @@
-import { useState, useEffect } from "react";
-import { Route, Switch, useHistory } from "react-router-dom";
-import axios from "axios";
+import { Route, Routes } from 'react-router-dom';
+import { Login } from '../components/Login/Login';
+import { Register } from '../components/Register/Register';
+import { DashBoard } from '../components/DashBoard/DashBoard';
 
-import { Login } from "../components/Login/Login";
-import { DashBoard } from "../components/DashBoard/DashBoard";
-
-export const Authenticator = () => {
-
-    const token = window.localStorage.getItem("@TOKEN")
-
-    if(!token) {
-        return (
-            <>
-                <Route path="/" >
-                    <Login />
-                </Route>
-            </>
-        )
-    }
-
-    return (
-        <>
-            <Route path="/dashboard">
-                <DashBoard />
-            </Route>
-        </>
-    )
-
-
-}  
-
+export const Rotas = () => {
+return (
+    <>    
+        <Routes>
+            <Route path='/' element={<Login/>} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/dashboard' element={<DashBoard />} />
+        </Routes>
+    </>
+);
+}

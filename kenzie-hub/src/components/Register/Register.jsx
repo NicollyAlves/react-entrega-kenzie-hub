@@ -1,14 +1,16 @@
-import { Link, Navigate, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { api } from "../../services/Api"
 import { SectionRegister } from "./styles"
 import logo from "../../assets/Logo.svg"
-import { toast } from "react-toastify"
+import { useContext } from "react"
+import { HomeContext } from "../../contexts/todos"
 
 
 export const Register = () => {
+
+    const { onSubmitRegister } = useContext(HomeContext)
 
     const formSchema = yup.object().shape({
         name: yup.string().required("O nome é obrigatório"),
@@ -23,43 +25,17 @@ export const Register = () => {
         resolver: yupResolver(formSchema)
     })
 
-    const navigate = useNavigate()
-
-    const onSubmitFunction = (data) => {
-        try {
-            api.post("/users", data)
-            .then((res) => {
-                console.log(res.data)
-                toast.success("Conta criada com sucesso!", {
-                    autoClose: 2000,
-                    style: {backgroundColor:"#343B41",
-                            color:"white", 
-                            maxWidth:"200px",
-                            borderRadius:"5px", 
-                            }
-                })
-            })
-            console.log(data);
-            navigate("/", {replace: true})
-        } catch (error) {
-            console.log(error);
-        }
-    } 
-
-    console.log(errors);
-    
-
     return (
 
         <SectionRegister>
             <nav>
                 <img src={logo} alt="Imagem da Logo da Kenzie Hub" />
                 <Link to={"/"}>
-                    <h4>Voltar</h4>    
+                    Voltar    
                 </Link>
             </nav>
 
-            <form onSubmit={handleSubmit(onSubmitFunction)}>
+            <form onSubmit={handleSubmit(onSubmitRegister)}>
                 <h2>Crie sua conta</h2>
                 <p>Rápido e grátis, vamos nessa</p>
 
