@@ -6,24 +6,23 @@ import { Button, SectionLogin } from "./styles"
 import logo from "../../assets/Logo.svg"
 import { useContext } from "react"
 import { HomeContext } from "../../contexts/todos"
+import { formSchemaLogin } from "../../validations/loginUser"
+import { AuthContext } from "../../contexts/authContext"
 
 export const Login = () => {
 
-    const { onSubmitLogin } = useContext(HomeContext)
+    const { loginUser } = useContext(AuthContext)
     
-    const formSchema = yup.object().shape({
-        password: yup.string().required("Senha é obrigatória"),
-        email: yup.string().required("Email é obrigatório").email("Email inválido"),
-    })
+    
     
     const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(formSchema)
+        resolver: yupResolver(formSchemaLogin)
     })
         
     return (
         <SectionLogin>
             <img src={logo} alt="Imagem da Logo da Kenzie Hub"></img>
-            <form onSubmit={handleSubmit(onSubmitLogin)}>
+            <form onSubmit={handleSubmit(loginUser)}>
                 <h2>Login</h2>
     
                 <div>

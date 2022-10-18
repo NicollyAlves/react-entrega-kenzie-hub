@@ -7,10 +7,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import lixeira from "../../assets/delete_FILL0_wght400_GRAD0_opsz48 1.svg"
 import { ButtonModal } from "./styles";
+import { AuthContext } from "../../contexts/authContext";
 
 export const DashBoard = () => {
 
-    const { user, clean, createNewTech, deleteTech, abrirModal, setAbrirModal } = useContext(HomeContext)
+    const { clean, createNewTech, tech, deleteTech, abrirModal, setAbrirModal } = useContext(HomeContext)
+    const { user } = useContext(AuthContext)
 
     const formSchema = yup.object().shape({
         title: yup.string().required("O título da tecnologia é obrigatório")
@@ -20,8 +22,6 @@ export const DashBoard = () => {
         resolver: yupResolver(formSchema)
     })
 
-    console.log(errors);
-    
     return (
         <SectionDashboard>
             <nav>
@@ -38,7 +38,7 @@ export const DashBoard = () => {
                     <button onClick={() => setAbrirModal(true)}>+</button>
                 </div>
                 <ul>
-                    {user.techs?.map((tech) => (
+                    {tech?.map((tech) => (
                             <li key={tech.id} >
                                 <h2>{tech.title}</h2>
                                 <div>
@@ -47,7 +47,7 @@ export const DashBoard = () => {
                                 </div>
                             </li>
                     ))}
-                </ul>
+                    </ul>
             </main>
 
             { abrirModal && <Modal>

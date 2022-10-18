@@ -1,28 +1,20 @@
 import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
 import { SectionRegister } from "./styles"
 import logo from "../../assets/Logo.svg"
 import { useContext } from "react"
 import { HomeContext } from "../../contexts/todos"
+import { formSchemaRegister } from "../../validations/registerUser"
+import { AuthContext } from "../../contexts/authContext"
 
 
 export const Register = () => {
 
-    const { onSubmitRegister } = useContext(HomeContext)
-
-    const formSchema = yup.object().shape({
-        name: yup.string().required("O nome é obrigatório"),
-        email: yup.string().required("O email é obrigatório").email("Email inválido"),
-        password: yup.string().required("A senha é obrigatória").matches(/^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/),
-        pass_confirm: yup.string().required("A senha é obrigatória").oneOf([yup.ref("password")], "Confirmação de senha deve ser igual a senha"),
-        bio: yup.string().required("A bio é obrigatória"),
-        contact: yup.string().required("A opção de contato é obrigatória"),
-    })
+    const { registerUser } = useContext(AuthContext)
 
     const { register, handleSubmit, formState: { errors }} = useForm({
-        resolver: yupResolver(formSchema)
+        resolver: yupResolver(formSchemaRegister)
     })
 
     return (
@@ -35,7 +27,7 @@ export const Register = () => {
                 </Link>
             </nav>
 
-            <form onSubmit={handleSubmit(onSubmitRegister)}>
+            <form onSubmit={handleSubmit(registerUser)}>
                 <h2>Crie sua conta</h2>
                 <p>Rápido e grátis, vamos nessa</p>
 
