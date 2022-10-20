@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { SectionDashboard, Modal } from "./styles";
 import logo from "../../assets/Logo.svg"
 import { DashContext } from "../../contexts/dashboardProvider";
@@ -11,7 +11,7 @@ import { AuthContext } from "../../contexts/authContext";
 
 export const DashBoard = () => {
 
-    const { clean, createNewTech, tech, deleteTech, abrirModal, setAbrirModal } = useContext(DashContext)
+    const { clean, createNewTech, tech, deleteTech, abrirModal, setAbrirModal, getTechs } = useContext(DashContext)
     const { user } = useContext(AuthContext)
 
     const formSchema = yup.object().shape({
@@ -21,6 +21,10 @@ export const DashBoard = () => {
     const { register, handleSubmit, formState: { errors }} = useForm({
         resolver: yupResolver(formSchema)
     })
+
+    useEffect(() => {
+        getTechs()
+    }, [tech])
 
     return (
         <SectionDashboard>
