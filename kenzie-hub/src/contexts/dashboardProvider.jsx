@@ -60,7 +60,7 @@ export const ProviderDash = ({children}) => {
 
     useEffect(() => {
         getTechs()
-    }, [tech, abrirModal, remove])
+    }, [ abrirModal, remove])
 
     const deleteTech = async (id) => {
         try {

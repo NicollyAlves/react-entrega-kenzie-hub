@@ -7,15 +7,15 @@ import { DashContext } from './dashboardProvider';
 export const AuthContext = createContext({});
 
 const AuthProvider = ({ children }) => {
-
-const [user, setUser] = useState();
-const [loading, setLoading] = useState(true);
-const navigate = useNavigate();
+    
+    const [user, setUser] = useState();
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 const location = useLocation();
 
 const token = localStorage.getItem("@TOKEN")
 
-const { tech, setTech } = useContext(DashContext)
+const { tech, setTech, getTechs } = useContext(DashContext)
 
 useEffect(() => {
     async function loadUser() {
@@ -29,15 +29,15 @@ useEffect(() => {
                 
                 const { data } = await api.get('/profile');
                 console.log(data);
-        
-        setUser(data);
+                
+                setUser(data);
         navigate("/dashboard", { replace: true })
         toast.success("Conta criada com sucesso!", {
             autoClose: 2000,
             style: {backgroundColor:"#343B41",
-                    color:"white",
-                    borderRadius:"5px",
-                }
+            color:"white",
+            borderRadius:"5px",
+        }
             })
         } catch (error) {
             console.error(error);
@@ -47,6 +47,8 @@ useEffect(() => {
     }
     loadUser();
 }, []);
+
+
 
 async function loginUser(data) {
     try {
@@ -60,16 +62,15 @@ async function loginUser(data) {
         localStorage.setItem("@TOKEN", token);
         localStorage.setItem("@USERID", response.data.user.id)
         
-        
         const toNavigate = location.state?.from?.pathname || 'dashboard';
         
         navigate(toNavigate, { replace: true });
-
+        
     } catch (error) {
         toast.error("Ops! Algo deu errado", {
                 autoClose: 2000,
                 style: {backgroundColor:"#343B41",
-                        color:"white",
+                color:"white",
                         borderRadius:"5px", 
                         }
             })
@@ -77,18 +78,6 @@ async function loginUser(data) {
     }
 }
 
-const getTechs = async () => {
-    const response = await api.get("/profile", {
-        headers: {
-            'Authorization': `Token ${token}`
-        }
-    })
-    setTech(response.data.techs)
-}
-
-useEffect(() => {
-    getTechs()
-}, [tech])
 
 
 return (

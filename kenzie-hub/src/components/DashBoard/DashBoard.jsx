@@ -13,6 +13,7 @@ export const DashBoard = () => {
 
     const { clean, createNewTech, tech, deleteTech, abrirModal, setAbrirModal, getTechs } = useContext(DashContext)
     const { user } = useContext(AuthContext)
+    const token = localStorage.getItem("@TOKEN")
 
     const formSchema = yup.object().shape({
         title: yup.string().required("O título da tecnologia é obrigatório")
@@ -21,9 +22,12 @@ export const DashBoard = () => {
     const { register, handleSubmit, formState: { errors }} = useForm({
         resolver: yupResolver(formSchema)
     })
+    console.error(errors);
 
     useEffect(() => {
-        getTechs()
+        if(token) {
+            getTechs()
+        }
     }, [tech])
 
     return (
