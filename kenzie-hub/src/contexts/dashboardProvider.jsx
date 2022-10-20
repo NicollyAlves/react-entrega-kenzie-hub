@@ -5,9 +5,9 @@ import { toast }  from "react-toastify";
 import { api } from "../services/Api";
 
 
-export const HomeContext = createContext({})
+export const DashContext = createContext({})
 
-export const ProviderHome = ({children}) => {
+export const ProviderDash = ({children}) => {
     const token = localStorage.getItem("@TOKEN")
 
     const [ abrirModal, setAbrirModal ] = useState(false)
@@ -29,7 +29,21 @@ export const ProviderHome = ({children}) => {
                 }
             })
             setAbrirModal(false)
+            toast.success("Tecnologia criada com sucesso!", {
+                autoClose: 2000,
+                style: {backgroundColor:"#343B41",
+                        color:"white",
+                        borderRadius:"5px", 
+                        }
+            })
         } catch (error) {
+            toast.error("Ops! Algo deu errado", {
+                autoClose: 2000,
+                style: {backgroundColor:"#343B41",
+                        color:"white",
+                        borderRadius:"5px", 
+                        }
+            })
             console.log(error);
         }
     }
@@ -64,10 +78,10 @@ export const ProviderHome = ({children}) => {
 
 
     return (
-        <HomeContext.Provider value={{
+        <DashContext.Provider value={{
                                         abrirModal, setAbrirModal, tech,
                                         clean, createNewTech, deleteTech}} >
             {children}
-        </HomeContext.Provider>
+        </DashContext.Provider>
     )
 }

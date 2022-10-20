@@ -5,7 +5,6 @@ import * as yup from "yup"
 import { Button, SectionLogin } from "./styles"
 import logo from "../../assets/Logo.svg"
 import { useContext } from "react"
-import { HomeContext } from "../../contexts/todos"
 import { formSchemaLogin } from "../../validations/loginUser"
 import { AuthContext } from "../../contexts/authContext"
 

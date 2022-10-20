@@ -4,14 +4,13 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { SectionRegister } from "./styles"
 import logo from "../../assets/Logo.svg"
 import { useContext } from "react"
-import { HomeContext } from "../../contexts/todos"
 import { formSchemaRegister } from "../../validations/registerUser"
-import { AuthContext } from "../../contexts/authContext"
+import { RegisterContext } from "../../contexts/registerContext"
 
 
 export const Register = () => {
 
-    const { registerUser } = useContext(AuthContext)
+    const { registerUser } = useContext(RegisterContext)
 
     const { register, handleSubmit, formState: { errors }} = useForm({
         resolver: yupResolver(formSchemaRegister)

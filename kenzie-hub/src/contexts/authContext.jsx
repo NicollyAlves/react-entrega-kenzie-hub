@@ -7,7 +7,7 @@ export const AuthContext = createContext({});
 
 const AuthProvider = ({ children }) => {
 
-const [user, setUser] = useState([]);
+const [user, setUser] = useState();
 const [loading, setLoading] = useState(true);
 const navigate = useNavigate();
 const location = useLocation();
@@ -15,6 +15,7 @@ const location = useLocation();
 const token = localStorage.getItem("@TOKEN")
 useEffect(() => {
     async function loadUser() {
+        console.log(token);
         
         if(token) {
             try {
@@ -25,7 +26,7 @@ useEffect(() => {
                 console.log(data);
         
         setUser(data);
-
+        navigate("/dashboard", { replace: true })
         toast.success("Conta criada com sucesso!", {
             autoClose: 2000,
             style: {backgroundColor:"#343B41",
@@ -36,14 +37,10 @@ useEffect(() => {
         } catch (error) {
             console.error(error);
         }
-    } else {
-        navigate("/")
-    }
+    } 
     setLoading(false);
     }
     loadUser();
-    
-
 }, []);
 
 async function loginUser(data) {
@@ -75,28 +72,10 @@ async function loginUser(data) {
     }
 }
 
-async function registerUser(data) {
-    try {
-        await api.post('/users', data)
-        
-        const toNavigate = location.state?.from?.pathname || '/';
-        
-        navigate(toNavigate, { replace: true });
-        toast.success("Cadastro realizado com sucesso", {
-                autoClose: 2000,
-                style: {backgroundColor:"#343B41",
-                        color:"white",
-                        borderRadius:"5px", 
-                        }
-        })
 
-    } catch (error) {
-        console.error(error);
-    }
-}
 
 return (
-    <AuthContext.Provider value={{ loginUser, registerUser, user, loading }}>
+    <AuthContext.Provider value={{ loginUser, user, loading }}>
         {children}
     </AuthContext.Provider>
 );

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { SectionDashboard, Modal } from "./styles";
 import logo from "../../assets/Logo.svg"
-import { HomeContext } from "../../contexts/todos";
+import { DashContext } from "../../contexts/dashboardProvider";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -11,7 +11,7 @@ import { AuthContext } from "../../contexts/authContext";
 
 export const DashBoard = () => {
 
-    const { clean, createNewTech, tech, deleteTech, abrirModal, setAbrirModal } = useContext(HomeContext)
+    const { clean, createNewTech, tech, deleteTech, abrirModal, setAbrirModal } = useContext(DashContext)
     const { user } = useContext(AuthContext)
 
     const formSchema = yup.object().shape({

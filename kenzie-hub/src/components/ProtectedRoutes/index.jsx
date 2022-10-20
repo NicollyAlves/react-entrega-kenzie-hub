@@ -12,14 +12,11 @@ const ProtectedRoutes = () => {
         return <div>Carregando...</div>;
     }
 
-    if (!user) {
-        navigate("/")
-    } 
-
+    console.log(user);
     return user ? (
         <Outlet />
     ) : (
-        <Navigate to='/' replace state={{ from: location }} />
+        <Navigate to='/' replace />
     );
 };  
 

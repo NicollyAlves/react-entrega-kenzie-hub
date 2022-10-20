@@ -125,7 +125,6 @@ export const SectionDashboard = styled.section`
                 align-items: center;
                 border-radius: 8px;
                 margin-bottom: 10px;
-                position: relative;
                 justify-content: space-between;
 
                 &:hover {
@@ -142,25 +141,21 @@ export const SectionDashboard = styled.section`
                 div {
                     display: flex;
                     flex-direction: row;
-                    justify-content: center;
                     align-items: center;
-                    position: absolute;
-                    right: 0;
+                    max-width: 90px;
 
                     h3 {
                         display: flex;
-                        align-items: center;
-                        justify-content: center;
+                        color: var(--Grey-1);
+                        padding-right: -50px;
+                        font-size: 16px;
+                        font-family: var(--Headline);
+                        font-weight: 500;
                     }
+
                 }
             }
 
-            h3 {
-                color: var(--Grey-1);
-                font-size: 16px;
-                font-family: var(--Headline);
-                font-weight: 500;
-            }
 
         }
     }
