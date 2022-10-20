@@ -12,7 +12,6 @@ const ProtectedRoutes = () => {
         return <div>Carregando...</div>;
     }
 
-    console.log(user);
     return user ? (
         <Outlet />
     ) : (

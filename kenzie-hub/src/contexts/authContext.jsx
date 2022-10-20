@@ -1,7 +1,8 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { api } from '../services/Api';
+import { DashContext } from './dashboardProvider';
 
 export const AuthContext = createContext({});
 
@@ -13,9 +14,13 @@ const navigate = useNavigate();
 const location = useLocation();
 
 const token = localStorage.getItem("@TOKEN")
+
+const { tech, setTech } = useContext(DashContext)
+
 useEffect(() => {
     async function loadUser() {
         console.log(token);
+
         
         if(token) {
             try {
@@ -72,6 +77,18 @@ async function loginUser(data) {
     }
 }
 
+const getTechs = async () => {
+    const response = await api.get("/profile", {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    })
+    setTech(response.data.techs)
+}
+
+useEffect(() => {
+    getTechs()
+}, [tech])
 
 
 return (

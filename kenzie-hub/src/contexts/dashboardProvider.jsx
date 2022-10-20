@@ -36,6 +36,7 @@ export const ProviderDash = ({children}) => {
                         borderRadius:"5px", 
                         }
             })
+            setTech(data.techs)
         } catch (error) {
             toast.error("Ops! Algo deu errado", {
                 autoClose: 2000,
@@ -59,9 +60,7 @@ export const ProviderDash = ({children}) => {
 
     useEffect(() => {
         getTechs()
-    }, [abrirModal, remove])
-
-    
+    }, [tech, abrirModal, remove])
 
     const deleteTech = async (id) => {
         try {
@@ -79,7 +78,7 @@ export const ProviderDash = ({children}) => {
 
     return (
         <DashContext.Provider value={{
-                                        abrirModal, setAbrirModal, tech,
+                                        abrirModal, setAbrirModal, tech, setTech, getTechs,
                                         clean, createNewTech, deleteTech}} >
             {children}
         </DashContext.Provider>
