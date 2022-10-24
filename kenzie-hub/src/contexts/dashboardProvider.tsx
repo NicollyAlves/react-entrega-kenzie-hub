@@ -103,7 +103,9 @@ export const ProviderDash = ({children}: IChildren) => {
     }
 
     useEffect(() => {
-        getTechs()
+        if(token) {
+            getTechs()
+        }
     }, [ abrirModal, remove])
 
     const deleteTech = async (id: string) => {

@@ -3,21 +3,23 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { SectionRegister } from "./styles"
 import logo from "../../assets/Logo.svg"
-import { useContext } from "react"
 import { formSchemaRegister } from "../../validations/registerUser"
+import { IUserRegister, RegisterContext,  } from "../../contexts/registerContext"
+import { useContext } from "react"
 
-import { IUserRegister, RegisterContext, useUserRegisterContext } from "../../contexts/registerContext"
-import { IData } from "../../contexts/dashboardProvider"
 
-//export type IUserRegister = Omit<IData>;
 export const Register = () => {
 
-    const {registerUser} = useUserRegisterContext()
-    //const { registerUser } = useContext(RegisterContext)
+    const { registerUser } = useContext(RegisterContext)
+    
 
     const { register, handleSubmit, formState: { errors }} = useForm<IUserRegister>({
         resolver: yupResolver(formSchemaRegister)
     })
+
+    const handleRegister = (data: IUserRegister) => {
+        registerUser(data)
+    }
 
     return (
 
@@ -29,7 +31,7 @@ export const Register = () => {
                 </Link>
             </nav>
 
-            <form onSubmit={handleSubmit(registerUser)}>
+            <form onSubmit={handleSubmit(handleRegister)}>
                 <h2>Crie sua conta</h2>
                 <p>Rápido e grátis, vamos nessa</p>
 

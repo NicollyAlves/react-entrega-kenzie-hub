@@ -27,7 +27,7 @@ export const DashBoard = () => {
         if(token) {
             getTechs()
         }
-    }, [tech])
+    }, [])
 
     return (
         <SectionDashboard>

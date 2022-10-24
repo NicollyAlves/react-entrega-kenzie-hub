@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 import { api } from "../services/Api";
 import { toast } from "react-toastify";
 import { IData, IChildren } from "./dashboardProvider";
@@ -18,24 +18,17 @@ export interface IUserRegister {
 }
 
 export interface IUserRegisterContext{
-    registerUser(data: IUserRegister): Promise<void>
+    registerUser(data: IUserRegister): void,
 }
 
-const RegisterProvider = ({ children }: IChildren) => {
-    //const {setUser} = useContext<IData>(AuthProvider)
-    const [ userRegister, setUserRegister ] = useState<IUserRegister>()
-
+export const RegisterProvider = ({ children }: IChildren) => {
     const navigate = useNavigate()
 
-    async function registerUser(data: IUserRegister): Promise<void>{
-        try {
-            console.log("oi");
-            
+    async function registerUser(data: IUserRegister){
+        try {            
             const response = await api.post('/users', data)
-            const { user: userResponse } = response.data
-            
-            setUserRegister(userResponse)
-            console.log(data);
+            const { userRegister: userResponse } = response.data
+            console.log(userResponse, response.data);
             
             const toNavigate = '/login';
             
@@ -48,7 +41,7 @@ const RegisterProvider = ({ children }: IChildren) => {
                             borderRadius:"5px", 
                             }
             })
-
+            return response
         } catch (error) {
             console.error(error);
         }
@@ -61,10 +54,10 @@ const RegisterProvider = ({ children }: IChildren) => {
     )
 }
 
-export function useUserRegisterContext(): IUserRegisterContext {
+/*export function useUserRegisterContext(): IUserRegisterContext {
     const context = useContext(RegisterContext)
 
     return context
-}
+}*/
 
-export default RegisterProvider
+//export default RegisterProvider
