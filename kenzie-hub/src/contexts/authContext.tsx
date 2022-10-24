@@ -2,42 +2,51 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { api } from '../services/Api';
-import { DashContext } from './dashboardProvider';
+import { IData, IChildren } from './dashboardProvider';
 
-export const AuthContext = createContext({});
+export const AuthContext = createContext<IUserLoginContext>({} as IUserLoginContext);
 
-const AuthProvider = ({ children }) => {
+export interface IUserLogin {
+    email: string,
+    password: string,
+    undefined: undefined,
+}
+
+export interface IUserLoginContext{
+    loginUser(data: IUserLogin): Promise<void>,
+    user: IData | undefined,
+    loading: boolean | undefined,
+}
+
+const AuthProvider = ({ children }: IChildren) => {
     
-    const [user, setUser] = useState();
+    const [user, setUser] = useState<IData>();
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-const location = useLocation();
+    const location = useLocation();
 
 const token = localStorage.getItem("@TOKEN")
 
-const { tech, setTech, getTechs } = useContext(DashContext)
-
 useEffect(() => {
     async function loadUser() {
-        console.log(token);
 
-        
         if(token) {
             try {
                 
                 api.defaults.headers.authorization = `Token ${token}`;
                 
-                const { data } = await api.get('/profile');
-                console.log(data);
+                const { data } = await api.get<IData>('/profile');
                 
                 setUser(data);
-        navigate("/dashboard", { replace: true })
-        toast.success("Conta criada com sucesso!", {
-            autoClose: 2000,
-            style: {backgroundColor:"#343B41",
-            color:"white",
-            borderRadius:"5px",
-        }
+
+                navigate("/dashboard", { replace: true })
+
+                toast.success("Conta criada com sucesso!", {
+                    autoClose: 2000,
+                    style: {backgroundColor:"#343B41",
+                    color:"white",
+                    borderRadius:"5px",
+                }
             })
         } catch (error) {
             console.error(error);
@@ -50,7 +59,7 @@ useEffect(() => {
 
 
 
-async function loginUser(data) {
+async function loginUser(data: IUserLogin):Promise<void> {
     try {
         const response = await api.post('/sessions', data);
         
@@ -86,5 +95,11 @@ return (
     </AuthContext.Provider>
 );
 };
+
+export function useUserLoginContext(): IUserLoginContext {
+    const context = useContext(AuthContext)
+
+    return context
+}
 
 export default AuthProvider;

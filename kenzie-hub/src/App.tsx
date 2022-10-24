@@ -3,7 +3,6 @@ import { Rotas } from "./routes"
 import "react-toastify/dist/ReactToastify.css";
 import AuthProvider from "./contexts/authContext";
 import { ProviderDash } from "./contexts/dashboardProvider";
-import { Register } from "./components/Register/Register";
 
 
 export const App = () => {
