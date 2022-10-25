@@ -4,22 +4,18 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { SectionRegister } from "./styles"
 import logo from "../../assets/Logo.svg"
 import { formSchemaRegister } from "../../validations/registerUser"
-import { IUserRegister, RegisterContext,  } from "../../contexts/registerContext"
+import { IUserRegister, RegisterContext, useUserRegisterContext,  } from "../../contexts/registerContext"
 import { useContext } from "react"
 
 
 export const Register = () => {
 
-    const { registerUser } = useContext(RegisterContext)
+    const { registerUser } = useUserRegisterContext()
     
 
     const { register, handleSubmit, formState: { errors }} = useForm<IUserRegister>({
         resolver: yupResolver(formSchemaRegister)
     })
-
-    const handleRegister = (data: IUserRegister) => {
-        registerUser(data)
-    }
 
     return (
 
@@ -31,7 +27,7 @@ export const Register = () => {
                 </Link>
             </nav>
 
-            <form onSubmit={handleSubmit(handleRegister)}>
+            <form onSubmit={handleSubmit(registerUser)}>
                 <h2>Crie sua conta</h2>
                 <p>Rápido e grátis, vamos nessa</p>
 

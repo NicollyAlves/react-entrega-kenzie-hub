@@ -9,13 +9,12 @@ export const AuthContext = createContext<IUserLoginContext>({} as IUserLoginCont
 export interface IUserLogin {
     email: string,
     password: string,
-    undefined: undefined,
 }
 
 export interface IUserLoginContext{
     loginUser(data: IUserLogin): Promise<void>,
     user: IData | undefined,
-    loading: boolean | undefined,
+    loading: boolean,
 }
 
 const AuthProvider = ({ children }: IChildren) => {

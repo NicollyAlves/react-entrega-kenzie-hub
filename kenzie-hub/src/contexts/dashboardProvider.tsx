@@ -23,7 +23,7 @@ export interface IData {
     course_module: string,
     bio: string,
     contact: string,
-    techs: ITechs[]
+    techs: ITechs[],
     works: [],
     created_at: string, 
     updated_at: string,
@@ -54,7 +54,7 @@ export const ProviderDash = ({children}: IChildren) => {
     const token = localStorage.getItem("@TOKEN")
     
     const [ abrirModal, setAbrirModal ] = useState(false)
-    const [ tech, setTech ] = useState<ITechs[] | undefined >()
+    const [ tech, setTech ] = useState<ITechs[] | undefined>()
     const [ remove, setRemove ] = useState([])
     
     const navigate = useNavigate()
@@ -63,10 +63,16 @@ export const ProviderDash = ({children}: IChildren) => {
         localStorage.clear()
         navigate("/") 
     }
+
+    useEffect(() => {
+        if(token) {
+            getTechs()
+        }
+    }, [ abrirModal, remove])
     
     const createNewTech = async (data: IPostTech) => {
         try {
-            await api.post("/users/techs", data, {
+            await api.post<IData>("/users/techs", data, {
                 headers: {
                     'Authorization': `Token ${token}`
                 }
@@ -85,16 +91,16 @@ export const ProviderDash = ({children}: IChildren) => {
             toast.error("Ops! Algo deu errado", {
                 autoClose: 2000,
                 style: {backgroundColor:"#343B41",
-                        color:"white",
+                color:"white",
                         borderRadius:"5px", 
-                        }
-            })
-            console.log(error);
+                    }
+                })
+                console.error(error);
+            }
         }
-    }
-
+        
     const getTechs = async () => {
-        const response = await api.get("/profile", {
+        const response = await api.get<IData>("/profile", {
             headers: {
                 'Authorization': `Token ${token}`
             }
@@ -102,22 +108,17 @@ export const ProviderDash = ({children}: IChildren) => {
         setTech(response.data.techs)
     }
 
-    useEffect(() => {
-        if(token) {
-            getTechs()
-        }
-    }, [ abrirModal, remove])
 
     const deleteTech = async (id: string) => {
         try {
-            await api.delete(`/users/techs/${id}`, {
+            await api.delete<IData>(`/users/techs/${id}`, {
                 headers: {
                     "Authorization": `Token ${token}`
                 }
             })
             setRemove([])
         } catch (error) {
-            console.log(error);
+            console.error(error)
         }
     }
 

@@ -3,9 +3,8 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Button, SectionLogin } from "./styles"
 import logo from "../../assets/Logo.svg"
-import { useContext } from "react"
 import { formSchemaLogin } from "../../validations/loginUser"
-import { AuthContext, IUserLogin, useUserLoginContext } from "../../contexts/authContext"
+import { IUserLogin, useUserLoginContext } from "../../contexts/authContext"
 
 export const Login = () => {
 

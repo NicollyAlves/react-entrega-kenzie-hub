@@ -1,9 +1,8 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext } from "react";
 import { api } from "../services/Api";
 import { toast } from "react-toastify";
-import { IData, IChildren } from "./dashboardProvider";
+import { IChildren } from "./dashboardProvider";
 import { useNavigate } from "react-router-dom";
-import AuthProvider from "./authContext";
 
 export const RegisterContext = createContext<IUserRegisterContext>({} as IUserRegisterContext)
 
@@ -54,10 +53,8 @@ export const RegisterProvider = ({ children }: IChildren) => {
     )
 }
 
-/*export function useUserRegisterContext(): IUserRegisterContext {
+export function useUserRegisterContext(): IUserRegisterContext {
     const context = useContext(RegisterContext)
 
     return context
-}*/
-
-//export default RegisterProvider
+}

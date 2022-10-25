@@ -1,13 +1,13 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { SectionDashboard, Modal } from "./styles";
 import logo from "../../assets/Logo.svg"
-import { DashContext, IPostTech, useDashContext } from "../../contexts/dashboardProvider";
+import { IPostTech, useDashContext } from "../../contexts/dashboardProvider";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import lixeira from "../../assets/delete_FILL0_wght400_GRAD0_opsz48 1.svg"
 import { ButtonModal } from "./styles";
-import { AuthContext, useUserLoginContext } from "../../contexts/authContext";
+import { useUserLoginContext } from "../../contexts/authContext";
 
 export const DashBoard = () => {
 
