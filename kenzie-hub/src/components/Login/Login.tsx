@@ -1,20 +1,16 @@
 import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
 import { Button, SectionLogin } from "./styles"
 import logo from "../../assets/Logo.svg"
-import { useContext } from "react"
 import { formSchemaLogin } from "../../validations/loginUser"
-import { AuthContext } from "../../contexts/authContext"
+import { IUserLogin, useUserLoginContext } from "../../contexts/authContext"
 
 export const Login = () => {
 
-    const { loginUser } = useContext(AuthContext)
+    const { loginUser } = useUserLoginContext()
     
-    
-    
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm<IUserLogin>({
         resolver: yupResolver(formSchemaLogin)
     })
         

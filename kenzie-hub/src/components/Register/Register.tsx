@@ -3,16 +3,17 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { SectionRegister } from "./styles"
 import logo from "../../assets/Logo.svg"
-import { useContext } from "react"
 import { formSchemaRegister } from "../../validations/registerUser"
-import { RegisterContext } from "../../contexts/registerContext"
+import { IUserRegister, RegisterContext, useUserRegisterContext,  } from "../../contexts/registerContext"
+import { useContext } from "react"
 
 
 export const Register = () => {
 
-    const { registerUser } = useContext(RegisterContext)
+    const { registerUser } = useUserRegisterContext()
+    
 
-    const { register, handleSubmit, formState: { errors }} = useForm({
+    const { register, handleSubmit, formState: { errors }} = useForm<IUserRegister>({
         resolver: yupResolver(formSchemaRegister)
     })
 
@@ -35,7 +36,6 @@ export const Register = () => {
                 <input type="text" id="nomeRegister"
                 placeholder="Digite aqui seu nome" {...register("name")} />
                     <span>{errors.name?.message}</span>   
-                
                 </div>
 
                 <div>
